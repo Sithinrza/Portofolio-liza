@@ -94,7 +94,7 @@ export default function App() {
                                     <a href="#projects" className="px-8 py-3.5 bg-slate-900 hover:bg-slate-800 text-white rounded-full font-medium transition-colors shadow-lg shadow-slate-900/20">
                                         View Projects
                                     </a>
-                                    <a href="https://github.com" target="_blank" rel="noreferrer" className="px-8 py-3.5 bg-white border border-slate-200 hover:border-slate-300 hover:bg-slate-50 text-slate-700 rounded-full font-medium transition-all flex items-center gap-2 shadow-sm">
+                                    <a href="https://github.com/Sithinrza" target="_blank" rel="noreferrer" className="px-8 py-3.5 bg-white border border-slate-200 hover:border-slate-300 hover:bg-slate-50 text-slate-700 rounded-full font-medium transition-all flex items-center gap-2 shadow-sm">
                                         <Code2 className="w-5 h-5 text-[#808000]" /> GitHub Profile
                                     </a>
                                 </motion.div>
@@ -110,9 +110,9 @@ export default function App() {
                                 <div className="relative w-64 h-64 md:w-[22rem] md:h-[22rem]">
                                     <div className="absolute inset-0 bg-[#808000]/10 rounded-full translate-x-4 translate-y-4"></div>
                                     <div className="absolute inset-0 bg-white border-8 border-white rounded-full overflow-hidden shadow-2xl z-10">
-                                        <img src="/public/foto/3.JPG" alt="Liza" className="w-full h-full object-cover" />
+                                        <img src="/foto/3.JPG" alt="Liza" className="w-full h-full object-cover" />
                                     </div>
-                                    <div className="absolute bottom-4 left-0 z-20 bg-white p-3 rounded-2xl shadow-xl border border-slate-100 flex items-center gap-3">
+                                    {/* <div className="absolute bottom-4 left-0 z-20 bg-white p-3 rounded-2xl shadow-xl border border-slate-100 flex items-center gap-3">
                                         <div className="bg-[#f4f7ed] text-[#808000] w-10 h-10 rounded-full flex items-center justify-center">
                                             <Code2 className="w-5 h-5" />
                                         </div>
@@ -120,7 +120,7 @@ export default function App() {
                                             <p className="text-xs text-slate-500 font-medium">Focus</p>
                                             <p className="text-sm font-bold text-slate-800">Web & AI</p>
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </motion.div>
                         </div>
@@ -189,7 +189,7 @@ export default function App() {
                             {/* Left Column: Education Image with Top-Down Curtain Reveal on Hover */}
                             <motion.div variants={fadeInUp} className="w-full lg:w-1/2">
                                 <div className="relative w-full max-w-md mx-auto lg:mx-0 aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl bg-slate-100 group">
-                                    <img src="/public/foto/edu.jpg" alt="Education" className="w-full h-full object-cover transition-transform duration-700" />
+                                    <img src="/foto/edu.jpg" alt="Education" className="w-full h-full object-cover transition-transform duration-700" />
                                     
                                     <div className="absolute top-0 left-0 w-full h-full bg-[#808000]/90 -translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out z-10 flex flex-col items-center justify-center text-white p-8 text-center">
                                         <span className="font-bold tracking-widest uppercase text-xl mb-2">Education Journey</span>
@@ -330,7 +330,7 @@ export default function App() {
                                 
                                 {/* Gambar Asli */}
                                 <img 
-                                    src="/public/foto/p1.png" 
+                                    src="/foto/p1.png" 
                                     alt="SIPETANG" 
                                     className="absolute inset-0 w-full h-full object-cover opacity-15 grayscale group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 z-0"
                                 />
@@ -369,7 +369,7 @@ export default function App() {
                                 
                                 {/* Gambar Asli */}
                                 <img 
-                                    src="/public/foto/p2.png" 
+                                    src="/foto/p2.png" 
                                     alt="Employee Management UI/UX" 
                                     className="absolute inset-0 w-full h-full object-cover opacity-15 grayscale group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 z-0"
                                 />
@@ -405,7 +405,7 @@ export default function App() {
                                 
                                 {/* Gambar Asli */}
                                 <img 
-                                    src="/public/foto/p3.png" 
+                                    src="/foto/p3.png" 
                                     alt="Employee Management UI/UX" 
                                     className="absolute inset-0 w-full h-full object-cover opacity-15 grayscale group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 z-0"
                                 />
@@ -480,7 +480,7 @@ export default function App() {
                                                     
                                                     {/* Foto normal, berada pas di bawah warna hijau */}
                                                     <div className="w-24 h-24 rounded-full bg-slate-200 border-4 border-white shadow-md overflow-hidden">
-                                                        <img src="/public/foto/5.png" alt="Liza Profile" className="w-full h-full object-cover" />
+                                                        <img src="/foto/5.png" alt="Liza Profile" className="w-full h-full object-cover" />
                                                     </div>
                                                     
                                                     <h3 className="text-xl font-bold text-slate-800 mt-4">Liza</h3>
@@ -495,7 +495,7 @@ export default function App() {
                                             </div>
                                         {/* BACK OF ID CARD */}
                                         <div className="absolute inset-0 w-full h-full bg-slate-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col border border-slate-700" style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}>
-                                            <img src="/public/foto/4.JPG" alt="Liza Full Body" className="w-full h-full object-cover opacity-90" />
+                                            <img src="/foto/4.JPG" alt="Liza Full Body" className="w-full h-full object-cover opacity-90" />
                                             <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent flex flex-col justify-end p-6">
                                                 <div className="w-full flex justify-between items-end">
                                                     <div>
