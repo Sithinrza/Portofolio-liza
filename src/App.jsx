@@ -1,6 +1,6 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Code2, PenTool, UserCheck, Camera, Check, Lightbulb, Eye, Wrench, Users, Send, Mail} from 'lucide-react';
+import { Code2, PenTool, UserCheck, Camera, Check, Lightbulb, Eye, Wrench, Users, Send, Mail, Award, X, FileText } from 'lucide-react';
 // Custom luxurious easing
 const smoothEasing = [0.16, 1, 0.3, 1];
 
@@ -27,8 +27,28 @@ const fadeInUp = {
 const scrollSettings = { once: false, margin: "-50px" };
 
 export default function App() {
+    const [selectedCertificate, setSelectedCertificate] = useState(null);
     const [isIdFlipped, setIsIdFlipped] = useState(false);
+    const [isPrint, setIsPrint] = useState(false);
     const idCardAreaRef = useRef(null);
+
+    useEffect(() => {
+    const handleBeforePrint = () => {
+        setIsPrint(true);
+    };
+
+    const handleAfterPrint = () => {
+        setIsPrint(false);
+    };
+
+    window.addEventListener('beforeprint', handleBeforePrint);
+    window.addEventListener('afterprint', handleAfterPrint);
+
+    return () => {
+        window.removeEventListener('beforeprint', handleBeforePrint);
+        window.removeEventListener('afterprint', handleAfterPrint);
+    };
+}, []);
 
     return (
         <div className="antialiased min-h-screen flex flex-col bg-[#fafafa] text-slate-800 font-sans selection:bg-[#99b56b] selection:text-white">
@@ -49,7 +69,7 @@ export default function App() {
                         <a href="#home" className="relative font-medium text-sm text-slate-500 hover:text-slate-900 transition-colors">Home</a>
                         <a href="#about" className="relative font-medium text-sm text-slate-500 hover:text-slate-900 transition-colors">About</a>
                         <a href="#experience" className="relative font-medium text-sm text-slate-500 hover:text-slate-900 transition-colors">Experience</a>
-                        <a href="#skills" className="relative font-medium text-sm text-slate-500 hover:text-slate-900 transition-colors">Skills</a>
+                        <a href="#certifications" className="relative font-medium text-sm text-slate-500 hover:text-slate-900 transition-colors">Certifications</a>
                         <a href="#projects" className="relative font-medium text-sm text-slate-500 hover:text-slate-900 transition-colors">Projects</a>
                     </div>
 
@@ -65,15 +85,16 @@ export default function App() {
                 <div className="max-w-6xl w-full px-6 overflow-hidden">
                     
                     {/* HOME SECTION */}
-                    <section id="home" className="pt-32 pb-20 md:pt-40 md:pb-32 min-h-screen flex flex-col justify-center relative">
+                    <section id="home" className="pdf-section pt-32 pb-20 md:pt-40 md:pb-32 min-h-screen flex flex-col justify-center relative">
                         <div className="absolute top-20 right-0 w-[40rem] h-[40rem] bg-[#f4f7ed] rounded-full blur-3xl -z-10 pointer-events-none"></div>
 
                         <div className="flex flex-col md:flex-row items-center justify-between gap-12">
                             <motion.div 
                                 className="w-full md:w-3/5 order-2 md:order-1 space-y-8"
                                 initial="hidden"
-                                whileInView="show"
-                                viewport={scrollSettings}
+                                animate={isPrint ? "show" : undefined}
+                                whileInView={isPrint ? undefined : "show"}
+                                viewport={isPrint ? undefined : scrollSettings}
                                 variants={staggerContainer}
                             >
                                 {/* <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-[#e5ecd7] text-[#656602] text-xs font-semibold uppercase tracking-wider shadow-sm">
@@ -87,16 +108,28 @@ export default function App() {
                                 </motion.h1>
                                 
                                 <motion.p variants={fadeInUp} className="text-slate-600 text-lg md:text-xl max-w-xl font-normal leading-relaxed">
-                                   An Informatics Engineering graduate with experience in web development, especially Laravel, PHP, and MySQL. I enjoy building practical applications with clean and user-friendly interfaces.
+                                    Through academic projects and internships, I have gained experience in web development and working with digital tools. I enjoy learning new skills and exploring how technology can be applied in different fields.
                                 </motion.p>
                                 
                                 <motion.div variants={fadeInUp} className="flex flex-wrap items-center gap-4 pt-2">
                                     <a href="#projects" className="px-8 py-3.5 bg-slate-900 hover:bg-slate-800 text-white rounded-full font-medium transition-colors shadow-lg shadow-slate-900/20">
                                         View Projects
                                     </a>
+                                    <a
+                                        href="/certificates/CV_Sithi-Nurhaliza.pdf"
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        className="px-8 py-3.5 bg-white border border-slate-200 hover:border-slate-300 hover:bg-slate-50 text-slate-700 rounded-full font-medium transition-all flex items-center gap-2 shadow-sm"
+                                    >
+                                        <FileText className="w-5 h-5 text-[#808000]" />
+                                        View CV
+                                    </a>
+
                                     <a href="https://github.com/Sithinrza" target="_blank" rel="noreferrer" className="px-8 py-3.5 bg-white border border-slate-200 hover:border-slate-300 hover:bg-slate-50 text-slate-700 rounded-full font-medium transition-all flex items-center gap-2 shadow-sm">
                                         <Code2 className="w-5 h-5 text-[#808000]" /> GitHub Profile
                                     </a>
+
+                                    
                                 </motion.div>
                             </motion.div>
                             
@@ -127,63 +160,46 @@ export default function App() {
                     </section>
 
                     {/* ABOUT SECTION */}
-                    <section id="about" className="py-20">
+                    <section id="about" className="pdf-section py-20">
                         <motion.div 
                             className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center"
                             initial="hidden"
-                            whileInView="show"
-                            viewport={scrollSettings}
+                            animate={isPrint ? "show" : undefined}
+                            whileInView={isPrint ? undefined : "show"}
+                            viewport={isPrint ? undefined : scrollSettings}
                             variants={staggerContainer}
                         >
                             <motion.div variants={fadeInUp}>
                                 <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">About Me</h2>
                                 <div className="w-12 h-1.5 bg-[#99b56b] mb-8 rounded-full"></div>
                                 <p className="text-slate-600 text-lg leading-relaxed mb-6">
-                                    I’m a D3 Informatics Engineering graduate with experience in programming and web-based application development. I’ve worked with technologies such as Laravel, PHP, MySQL, and Figma through my internship and academic projects.                        
+                                    I enjoy learning about technology, exploring new things, and developing my skills through different experiences. I have an interest in software development and am also open to exploring opportunities in other fields. I believe that trying new things and gaining different experiences can help me continue to grow and learn.
                                 </p>
-                                <p className="text-slate-600 text-lg leading-relaxed">
+                                {/* <p className="text-slate-600 text-lg leading-relaxed">
                                      I enjoy learning new things, exploring technology, and creating practical solutions through programming. I’m currently looking for opportunities to grow, gain more experience, and contribute to meaningful projects.                        
-                                </p>
+                                </p> */}
                             </motion.div>
                             
-                            <motion.div variants={fadeInUp} className="p-8 bg-[#f4f7ed]/60 backdrop-blur-sm rounded-3xl border border-[#e5ecd7] shadow-sm hover:shadow-md transition-shadow">
-                              <h3 className="text-xl font-bold text-slate-800 mb-6 flex items-center gap-3">
-                                  <Lightbulb className="w-6 h-6 text-[#808000]" /> MY APPROACH
-                              </h3>
-                              <ul className="space-y-5">
-                                  <li className="flex items-start gap-4 group">
-                                      <div className="w-9 h-9 rounded-full bg-white text-[#808000] font-bold text-xs flex items-center justify-center flex-shrink-0 shadow-sm border border-[#e5ecd7] group-hover:bg-[#808000] group-hover:text-white transition-colors">01</div>
-                                      <div>
-                                          <h4 className="font-semibold text-slate-900 text-base">Learn</h4>
-                                          <p className="text-sm text-slate-600 mt-0.5">Always open to learning new technologies and gaining new experiences.</p>
-                                      </div>
-                                  </li>
-                                  <li className="flex items-start gap-4 group">
-                                      <div className="w-9 h-9 rounded-full bg-white text-[#808000] font-bold text-xs flex items-center justify-center flex-shrink-0 shadow-sm border border-[#e5ecd7] group-hover:bg-[#808000] group-hover:text-white transition-colors">02</div>
-                                      <div>
-                                          <h4 className="font-semibold text-slate-900 text-base">Build</h4>
-                                          <p className="text-sm text-slate-600 mt-0.5">Turning ideas into functional and practical applications.</p>
-                                      </div>
-                                  </li>
-                                  <li className="flex items-start gap-4 group">
-                                      <div className="w-9 h-9 rounded-full bg-white text-[#808000] font-bold text-xs flex items-center justify-center flex-shrink-0 shadow-sm border border-[#e5ecd7] group-hover:bg-[#808000] group-hover:text-white transition-colors">03</div>
-                                      <div>
-                                          <h4 className="font-semibold text-slate-900 text-base">Grow</h4>
-                                          <p className="text-sm text-slate-600 mt-0.5">Continuously improving skills and contributing to meaningful projects.</p>
-                                      </div>
-                                  </li>
-                              </ul>
-                          </motion.div>
+                            <motion.div variants={fadeInUp} className="flex justify-center items-center">
+                                <div className="w-2/3 h-[320px] overflow-hidden rounded-3xl shadow-sm">
+                                    <img
+                                        src="/foto/6.jpg"
+                                        alt="About Me"
+                                        className="w-full h-full object-cover object-center"
+                                    />
+                                </div>
+                            </motion.div>
                         </motion.div>
                     </section>
 
                     {/* EXPERIENCE / EDUCATION SECTION */}
-                    <section id="experience" className="py-24">
+                    <section id="experience" className="pdf-section py-24">
                         <motion.div 
                             className="flex flex-col lg:flex-row items-center gap-16"
                             initial="hidden"
-                            whileInView="show"
-                            viewport={scrollSettings}
+                            animate={isPrint ? "show" : undefined}
+                            whileInView={isPrint ? undefined : "show"}
+                            viewport={isPrint ? undefined : scrollSettings}
                             variants={staggerContainer}
                         >
                             {/* Left Column: Education Image with Top-Down Curtain Reveal on Hover */}
@@ -227,92 +243,125 @@ export default function App() {
                         </motion.div>
                     </section>
         
-                    {/* SKILLS SECTION */}
-                    <section id="skills" className="py-20">
-                        <motion.div 
-                            className="flex flex-col md:flex-row justify-between items-end mb-12"
+                    {/* CERTIFICATIONS SECTION */}
+                    <section id="certifications" className="pdf-section py-20">
+                        <motion.div
                             initial="hidden"
-                            whileInView="show"
-                            viewport={scrollSettings}
+                            animate={isPrint ? "show" : undefined}
+                            whileInView={isPrint ? undefined : "show"}
+                            viewport={isPrint ? undefined : scrollSettings}
                             variants={staggerContainer}
                         >
-                            <motion.div variants={fadeInUp}>
-                                <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Tech Arsenal</h2>
-                                <p className="text-slate-600 max-w-lg">The tools and technologies I use to bring ideas to life.</p>
-                            </motion.div>
-                        </motion.div>
-
-                        <motion.div 
-                            className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-fr"
-                            initial="hidden"
-                            whileInView="show"
-                            viewport={scrollSettings}
-                            variants={staggerContainer}
-                        >
-                            {/* Card 1: Web Development */}
-                            <motion.div variants={fadeInUp} className="bg-white p-8 md:col-span-2 rounded-3xl border border-slate-100 shadow-sm hover:-translate-y-1 transition-transform">
-                                <div className="w-12 h-12 rounded-xl bg-[#f4f7ed] text-[#808000] flex items-center justify-center text-xl mb-6">
-                                    <Code2 className="w-6 h-6" />
-                                </div>
-                                <h3 className="text-xl font-bold text-slate-900 mb-2">Web Development</h3>
-                                <p className="text-slate-600 mb-8 max-w-md">Building robust backends, structuring databases, and crafting responsive interfaces.</p>
-                                <div className="flex flex-wrap gap-3">
-                                    {['Laravel', 'PHP', 'MySQL', 'HTML', 'Tailwind CSS'].map(tech => (
-                                        <span key={tech} className="px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm font-medium text-slate-700">{tech}</span>
-                                    ))}
-                                </div>
-                            </motion.div>
-
-                            {/* Card 2: UI/UX Design (Replaced Computer Vision) */}
-                            <motion.div variants={fadeInUp} className="bg-[#808000] p-8 rounded-3xl text-white shadow-sm hover:-translate-y-1 transition-transform">
-                                <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center text-xl mb-6">
-                                    <PenTool className="w-6 h-6" />
-                                </div>
-                                <h3 className="text-xl font-bold mb-2">UI/UX Design</h3>
-                                <p className="text-[#e5ecd7] mb-8 text-sm leading-relaxed">Designing intuitive user interfaces and wireframing practical user experiences.</p>
-                                <div className="flex flex-wrap gap-3">
-                                    {['Figma', 'Adobe XD', 'Prototyping'].map(tech => (
-                                        <span key={tech} className="px-3 py-1.5 bg-black/20 rounded-md text-sm font-medium">{tech}</span>
-                                    ))}
-                                </div>
-                            </motion.div>
-
-                            {/* Card 3: Tools & Workflow */}
-                            <motion.div variants={fadeInUp} className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:-translate-y-1 transition-transform">
-                                <div className="w-12 h-12 rounded-xl bg-slate-100 text-slate-600 flex items-center justify-center text-xl mb-6">
-                                    <Wrench className="w-6 h-6" />
-                                </div>
-                                <h3 className="text-lg font-bold text-slate-900 mb-4">Tools & Workflow</h3>
-                                <div className="flex flex-wrap gap-2">
-                                    {['VS Code', 'XAMPP', 'phpMyAdmin', 'Git'].map(tool => (
-                                        <span key={tool} className="px-3 py-1 bg-white border border-slate-200 shadow-sm rounded-md text-sm text-slate-600">{tool}</span>
-                                    ))}
-                                </div>
-                            </motion.div>
-
-                            {/* Card 4: Personal Approach (Jalan Tengah) */}
-                            <motion.div variants={fadeInUp} className="bg-white p-8 md:col-span-2 rounded-3xl border border-slate-100 shadow-sm hover:-translate-y-1 transition-transform">
-                                <div className="flex items-center gap-4 mb-4">
-                                    <div className="w-12 h-12 rounded-xl bg-[#f4f7ed] text-[#808000] flex items-center justify-center text-xl">
-                                        <Users className="w-6 h-6" />
-                                    </div>
-                                    <h3 className="text-lg font-bold text-slate-900">Personal Approach</h3>
-                                </div>
-                                <p className="text-slate-600 text-sm leading-relaxed">
-                                    I approach every project with a strong willingness to learn and a careful eye for detail. I adapt easily to new environments and believe that good communication and teamwork are the best ways to build great things together.
+                            <motion.div variants={fadeInUp} className="mb-12">
+                                <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+                                    Certifications
+                                </h2>
+                                <p className="text-slate-600 max-w-lg">
+                                    Professional certifications and qualifications I have earned.
                                 </p>
                             </motion.div>
+
+                            <motion.div
+                                variants={staggerContainer}
+                                className="grid grid-cols-1 md:grid-cols-3 gap-6"
+                            >
+                                {[
+                                    {
+                                        title: "Software Development - Programmer",
+                                        issuer: "BNSP – LSP Politeknik Negeri Banjarmasin",
+                                        year: "2026 - 2029",
+                                        file: "/certificates/Sertifikat_Kompetensi-Programmer.pdf",
+                                    },
+
+                                    {
+                                        title: "Software Development - Junior Mobile Programmer",
+                                        issuer: "BNSP – LSP Teknologi Digital",
+                                        year: "2024 – 2027",
+                                        file: "/certificates/Sertifikat_Kompetensi-JMP.pdf",
+                                    },
+
+                                    {
+                                        title: "Software Engineering - KKNI Level II",
+                                        issuer: "BNSP – LSP SMKN 2 Banjarmasin",
+                                        year: "2023 – 2026",
+                                        file: "/certificates/Sertifikat_Kompetensi-Software_Engineering.pdf",
+                                    },
+                                    
+                                    
+                                ].map((cert) => (
+                                    <motion.div
+                                        key={cert.title}
+                                        variants={fadeInUp}
+                                        className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:-translate-y-1 hover:shadow-md transition-all"
+                                    >
+                                        <div className="w-12 h-12 rounded-xl bg-[#f4f7ed] text-[#808000] flex items-center justify-center mb-6">
+                                            <Award className="w-6 h-6" />
+                                        </div>
+
+                                        <h3 className="text-lg font-bold text-slate-900 mb-2">
+                                            {cert.title}
+                                        </h3>
+
+                                        <p className="text-sm text-slate-600 mb-1">
+                                            {cert.issuer}
+                                        </p>
+
+                                        <p className="text-xs text-slate-400 mb-6">
+                                            {cert.year}
+                                        </p>
+
+                                        <button
+                                            onClick={() => setSelectedCertificate(cert.file)}
+                                            className="text-sm font-semibold text-[#808000] hover:underline"
+                                        >
+                                            View Certificate
+                                        </button>
+                                    </motion.div>
+                                ))}
+                            </motion.div>
                         </motion.div>
+
+                        {/* PDF PREVIEW MODAL */}
+                        {selectedCertificate && (
+                            <div
+                                className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-4"
+                                onClick={() => setSelectedCertificate(null)}
+                            >
+                                <div
+                                    className="bg-white w-full max-w-4xl h-[85vh] rounded-2xl overflow-hidden flex flex-col"
+                                    onClick={(e) => e.stopPropagation()}
+                                >
+                                    <div className="flex justify-between items-center p-4 border-b">
+                                        <h3 className="font-semibold text-slate-800">
+                                            Certificate Preview
+                                        </h3>
+                                        <button
+                                            onClick={() => setSelectedCertificate(null)}
+                                            className="text-slate-500 hover:text-slate-900"
+                                        >
+                                            <X className="w-6 h-6" />
+                                        </button>
+                                    </div>
+
+                                    <iframe
+                                        src={`${selectedCertificate}#toolbar=0`}
+                                        className="w-full flex-1"
+                                        title="Certificate Preview"
+                                    />
+                                </div>
+                            </div>
+                        )}
                     </section>
 
                     {/* PROJECTS SECTION */}
-                    <section id="projects" className="py-20">
+                    <section id="projects" className="pdf-section py-20">
                         <motion.div 
                             className="text-center max-w-2xl mx-auto mb-16"
                             initial="hidden"
-                            whileInView="show"
-                            viewport={scrollSettings}
-                            variants={fadeInUp}
+                            animate={isPrint ? "show" : undefined}
+                            whileInView={isPrint ? undefined : "show"}
+                            viewport={isPrint ? undefined : scrollSettings}
+                            variants={staggerContainer}
                         >
                             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">My Projects</h2>
                             <p className="text-slate-600">A collection of projects I've worked on during my studies and internships.</p>
@@ -321,8 +370,9 @@ export default function App() {
                         <motion.div 
                             className="grid grid-cols-1 lg:grid-cols-2 gap-8"
                             initial="hidden"
-                            whileInView="show"
-                            viewport={scrollSettings}
+                            animate={isPrint ? "show" : undefined}
+                            whileInView={isPrint ? undefined : "show"}
+                            viewport={isPrint ? undefined : scrollSettings}
                             variants={staggerContainer}
                         >
                             {/* Project 1: Presence System */}
@@ -332,7 +382,7 @@ export default function App() {
                                 <img 
                                     src="/foto/p1.png" 
                                     alt="SIPETANG" 
-                                    className="absolute inset-0 w-full h-full object-cover opacity-15 grayscale group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 z-0"
+                                    className="project-image absolute inset-0 w-full h-full object-cover opacity-15 grayscale group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 z-0"
                                 />
 
                                 {/* Badge Tahun */}
@@ -346,7 +396,7 @@ export default function App() {
                                 </a>
 
                                 {/* Konten Teks di Tengah */}
-                                <div className="absolute inset-0 z-10 flex flex-col items-center justify-center p-8 text-center opacity-100 group-hover:opacity-0 transition-opacity duration-300 pointer-events-none">
+                                <div className="project-overlay-text absolute inset-0 z-10 flex flex-col items-center justify-center p-8 text-center opacity-100 group-hover:opacity-0 transition-opacity duration-300 pointer-events-none">
                                     {/* Sub-judul dipertegas sebagai Mobile-First Web */}
                                     {/* <span className="text-[#808000] font-bold text-xs tracking-widest uppercase mb-3"></span> */}
                                     <h3 className="text-2xl md:text-3xl font-bold text-slate-900 mb-4 tracking-tight">Sistem Presensi Tendik Dan Anak Magang (SIPETANG)</h3>
@@ -441,7 +491,7 @@ export default function App() {
                     </section>
 
                     {/* CONTACT SECTION WITH DRAGGABLE & FLIPPABLE ID CARD */}
-                    <section id="contact" className="py-24 mb-12">
+                    <section id="contact" className="pdf-section py-24 mb-12">
                         <div className="bg-slate-900 rounded-[3rem] overflow-hidden relative" ref={idCardAreaRef}>
                             <div className="absolute -top-24 -right-24 w-64 h-64 bg-[#99b56b] rounded-full blur-[80px] opacity-30 pointer-events-none"></div>
                             <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-[#99b56b] rounded-full blur-[80px] opacity-30 pointer-events-none"></div>
@@ -449,15 +499,15 @@ export default function App() {
                             <div className="grid grid-cols-1 lg:grid-cols-2 p-10 md:p-16 gap-12 relative z-10">
                                 
                                 <div className="h-[400px] flex justify-center items-center relative perspective-1000">
-                                    <div className="absolute top-0 text-slate-400 text-xs font-mono tracking-widest uppercase animate-pulse">
+                                    <div className="no-print absolute top-0 text-slate-400 text-xs font-mono tracking-widest uppercase animate-pulse">
                                         Drag to move • Click to flip
                                     </div>
 
                                     <motion.div 
-                                        drag
-                                        dragConstraints={idCardAreaRef}
-                                        whileDrag={{ scale: 1.05, cursor: "grabbing" }}
-                                        onClick={() => setIsIdFlipped(!isIdFlipped)}
+                                        drag={!isPrint}
+                                        dragConstraints={!isPrint ? idCardAreaRef : undefined}
+                                        whileDrag={!isPrint ? { scale: 1.05, cursor: "grabbing" } : undefined}
+                                        onClick={() => !isPrint && setIsIdFlipped(!isIdFlipped)}
                                         animate={{ rotateY: isIdFlipped ? 180 : 0 }}
                                         transition={{ duration: 0.7, type: "spring", stiffness: 100 }}
                                         className="relative w-64 h-80 cursor-grab mt-6"
@@ -512,8 +562,9 @@ export default function App() {
                                 <motion.div 
                                     className="flex flex-col justify-center text-left"
                                     initial="hidden"
-                                    whileInView="show"
-                                    viewport={scrollSettings}
+                                    animate={isPrint ? "show" : undefined}
+                                    whileInView={isPrint ? undefined : "show"}
+                                    viewport={isPrint ? undefined : scrollSettings}
                                     variants={staggerContainer}
                                 >
                                     <motion.div variants={fadeInUp}>
@@ -555,7 +606,7 @@ export default function App() {
                 </div>
             </main>
 
-            <footer className="w-full bg-white border-t border-slate-200 py-8 text-center mt-auto">
+            <footer className="no-print w-full bg-white border-t border-slate-200 py-8 text-center mt-auto">
                 <p className="text-sm text-slate-500 font-medium">
                     &copy; 2026 Haliza.
                 </p>
