@@ -1,1 +1,91 @@
 @import "tailwindcss";
+
+/* ================================
+   PORTFOLIO PRINT / PDF
+   16:9 Landscape
+================================ */
+
+@page {
+    size: 13.333in 7.5in;
+    margin: 0;
+}
+
+@media print {
+.project-image {
+        opacity: 1 !important;
+        filter: none !important;
+    }
+
+    .project-overlay-text {
+        opacity: 1 !important;
+    }
+    /* Hilangkan margin bawaan browser */
+    html,
+    body {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 13.333in;
+        background: white !important;
+    }
+
+    /* Matikan semua animasi dan transition */
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+    }
+
+    /* Navbar dan footer tidak masuk PDF */
+    .no-print {
+        display: none !important;
+    }
+
+    /* Setiap section = 1 halaman */
+    .pdf-section {
+        width: 13.333in !important;
+        height: 7.5in !important;
+        min-height: 7.5in !important;
+
+        margin: 0 !important;
+        padding: 0.5in 0.7in !important;
+
+        box-sizing: border-box;
+
+        page-break-after: always;
+        break-after: page;
+
+        overflow: hidden;
+    }
+
+    /* Halaman terakhir tidak membuat halaman kosong */
+    .pdf-section:last-of-type {
+        page-break-after: auto;
+        break-after: auto;
+    }
+
+    /* Pastikan elemen motion langsung terlihat */
+    .pdf-section [style*="opacity"] {
+        opacity: 1 !important;
+    }
+
+    /* Jangan memotong card */
+    .pdf-section > *,
+    .pdf-section article,
+    .pdf-section .rounded-3xl,
+    .pdf-section .rounded-\[2rem\] {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    /* Hilangkan efek hover pada PDF */
+    .pdf-section img {
+        transform: none !important;
+    }
+
+    /* Link jangan tampil sebagai URL */
+    a {
+        text-decoration: none !important;
+    }
+}
